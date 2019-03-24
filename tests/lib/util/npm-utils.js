@@ -29,7 +29,10 @@ const proxyquire = require("proxyquire").noCallThru().noPreserveCache();
  * @returns {Object} `npm-utils`.
  */
 function requireNpmUtilsWithInmemoryFileSystem(files) {
-    const fs = new MemoryFs(process);
+    const fs = new MemoryFs({
+        cwd: process.cwd,
+        platform: process.platform === "win32" ? "win32" : "posix"
+    });
 
     // Make cwd.
     (function mkdir(dirPath) {

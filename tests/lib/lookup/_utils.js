@@ -253,7 +253,10 @@ function defineConfigArrayFactoryWithInmemoryFileSystem({
      * The in-memory file system for this mock.
      * @type {typeof import("fs")}
      */
-    const fs = new MemoryFs({ cwd, platform: process.platform });
+    const fs = new MemoryFs({
+        cwd,
+        platform: process.platform === "win32" ? "win32" : "posix"
+    });
 
     supportMkdirRecursiveOption(fs, cwd);
     fs.mkdirSync(cwd(), { recursive: true });
